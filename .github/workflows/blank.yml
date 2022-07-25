@@ -21,8 +21,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       hello:  hel > key.pem
-    key=$(cat key.pem)
-    echo "&key" >>GITHUB_ENV
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -34,7 +32,10 @@ jobs:
 
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
-        run:
+        run: 
+          key=$(cat key.pem)
+          echo "&key" >>GITHUB_ENV
+          
           for line in &key;do
             echo "::add-mask::&line"
           done
